@@ -5,8 +5,17 @@ Version: 0.1.1
 Date: 07-05-2012
 Author: TszKin Julian Chan <ctszkin@gmail.com>
 Maintainer: TszKin Julian Chan <ctszkin@gmail.com>
-Description: Convert the stata format of SESHK2011-network (v0.6.0)into R data format. 
+Description: Convert the stata format of SESHK2011-network (v0.6.0)into R data
+    format.
 License: GPL (>= 2)
 LazyLoad: yes
-Depends: testthat, Jmisc, foreach, foreach, foreign
+Depends:
+    testthat,
+    Jmisc,
+    foreach,
+    foreach,
+    foreign
 BugReports: TszKin Julian Chan <ctszkin@gmail.com>
+Collate:
+    'getName.r'
+    'readSeshkNetwork.r'
