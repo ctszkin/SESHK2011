@@ -12,8 +12,8 @@
 #' 
 #' } 
 readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.6.2/"){
-	if (version!="SESHK2011 - network - 0.6.2/")
-		warning("Only tested under 0.6.2. " %+% version %+% " is not tested. Error may occur.")
+	if (.version!="SESHK2011 - network - 0.6.2/")
+		warning("Only tested under 0.6.2. " %+% .version %+% " is not tested. Error may occur.")
 
 	path<-
 	if (missing(.data_source))
