@@ -573,3 +573,67 @@ genModelData <- function(.spec, save=FALSE){
   }
   return(out)
 }
+
+
+#' Description genDataMatrix
+#' @name genDataMatrix
+#' @aliases genDataMatrix
+#' @title genDataMatrix
+#' @param  data
+#' @param  any_wx
+#' @return value
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @export
+#' @examples  
+#' \dontrun{
+#' 
+#' } 
+
+genDataMatrix <- function(data, any_wx = TRUE){    
+  Y = unlist( sapply(data, function(z) z$y ) )
+  WY = do.call( rbind, lapply(data, "[[", "wy") )
+
+  if (any_wx){
+    X = do.call(rbind, lapply(data, function(z) z$x_wx ))
+  } else {
+    X = do.call(rbind, lapply(data, function(z) z$x ))
+  }
+
+  n_vector = sapply(data, function(z) z$n )
+  X = demean(X)
+  Y = demean(Y)
+  WY = demean(WY)
+
+  W_list = lapply(data, "[[", "W_list")
+
+  list(
+    Y = Y,
+    X = X,
+    WY = WY,
+    W_list = W_list,
+    n_vector = n_vector
+  )
+}
+
+#' Description genNetworkData
+#' @name genNetworkData
+#' @aliases genNetworkData
+#' @title genNetworkData
+#' @param  data
+#' @return value
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @export
+#' @examples  
+#' \dontrun{
+#' 
+#' } 
+
+genNetworkData <- function(data){
+  lapply(data, function(x){
+    location_index1 = lapply(1:x$n, function(z){ which(x$group_index[,1] == z) })
+    location_index2 = lapply(1:x$n, function(z){ which(x$group_index[,2] == z) })
+    location_index_all = lapply(1:x$n, function(z){ c(location_index1[[z]], location_index2[[z]])} )
+    list(location_index1=location_index1,location_index2=location_index2,location_index_all=location_index_all)
+  })
+}
+
