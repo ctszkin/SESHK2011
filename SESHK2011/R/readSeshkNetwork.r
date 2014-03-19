@@ -637,3 +637,21 @@ genNetworkData <- function(data){
   })
 }
 
+#' generateWeighting 
+#' @name generateWeighting
+#' @aliases generateWeighting
+#' @title generateWeighting
+#' @param D a network matrix
+#' @return weighting matrix
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @keywords internal 
+#' @export
+generateWeighting<-function(D){
+  W<-D/rowSums(D)
+  W[is.nan(W)]<-0
+  W
+}
+
+
+
+

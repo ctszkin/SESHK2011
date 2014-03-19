@@ -102,12 +102,12 @@ getFileName<-function(type=c("network","hobby"),spec){
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @keywords internal 
 #' @export
-genPairwiseIndex = cmpfun(function(n){
+genPairwiseIndex <- function(n){
   # i<- foreach( i=2:n,.combine=c ) %do% seq(from=i,to=n)
   i = unlist(lapply(2:n, seq, to=n))
   j = rep(1:(n-1),times=(n-1):1)
   cbind(i,j)
-})
+}
 
 
 #' getPairwiseFriendshipData 
@@ -120,7 +120,7 @@ genPairwiseIndex = cmpfun(function(n){
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @keywords internal 
 #' @export
-getPairwiseFriendshipData<-cmpfun(function(network_data,network_formation_formula){
+getPairwiseFriendshipData<-function(network_data,network_formation_formula){
   data<-network_data$data
   n <- nrow(data)
   require_variable <-unique(sub("friends_","",all.vars(network_formation_formula)))
@@ -158,7 +158,7 @@ getPairwiseFriendshipData<-cmpfun(function(network_data,network_formation_formul
   response_friends=!!response_friends
 
   list(response_self=response_self, response_friends=response_friends,self_data_matrix=self_data_matrix,friends_data_matrix=friends_data_matrix)
-})
+}
 
 #' genPairwiseHobbyData 
 #' @name genPairwiseHobbyData
@@ -169,7 +169,7 @@ getPairwiseFriendshipData<-cmpfun(function(network_data,network_formation_formul
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @keywords internal 
 #' @export
-genPairwiseHobbyData<-cmpfun(function(H){
+genPairwiseHobbyData<-function(H){
   tHH<-tcrossprod(H)
   # stopifnot(nrow(tHH)==ncol(tHH))
   n<-nrow(tHH)
@@ -178,25 +178,7 @@ genPairwiseHobbyData<-cmpfun(function(H){
   index2= (index[,1]-1) * n + index[,2]
 
   tHH[index2]
-})
-
-
-
-#' generateWeighting 
-#' @name generateWeighting
-#' @aliases generateWeighting
-#' @title generateWeighting
-#' @param D a network matrix
-#' @return weighting matrix
-#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
-#' @keywords internal 
-#' @export
-generateWeighting<-cmpfun(function(D){
-  W<-D/rowSums(D)
-  W[is.nan(W)]<-0
-  W
-})
-
+}
 
 
 
