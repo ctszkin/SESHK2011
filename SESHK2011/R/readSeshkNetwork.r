@@ -222,8 +222,8 @@ getHobby<-function(.raw_data,.school,.hobby,.drop_by_case_id){
 #' @aliases prepareData
 #' @title prepareData
 #' @param  .raw_data
-#' @param  .school
-#' @param .network
+#' @param  .spec
+#' @param .school
 #' @param .hobby
 #' @param .network_mode
 #' @param .process_network
@@ -235,50 +235,72 @@ getHobby<-function(.raw_data,.school,.hobby,.drop_by_case_id){
 #' \dontrun{
 #' 
 #' } 
-prepareData <- function(.raw_data,.school=getVariableName("school",.raw_data$spec),.network,.hobby=getVariableName("hobby",.raw_data$spec),.network_mode=c("undirected_and","undirected_or","directed","directed_inversed"),.process_network=function(x) {(x>0)+0},.drop_by_case_id){
+prepareData <- function (.raw_data, .spec, .school ){
 
-	# arguments matching
- 	.hobby<-match.arg(.hobby,several.ok=TRUE)
- 	.network_mode<-match.arg(.network_mode,several.ok=FALSE)
- 	.school<-match.arg(.school,several.ok=TRUE)
+    # .hobby <- match.arg(.hobby, several.ok = TRUE)
+    # .school <- match.arg(.school, several.ok = TRUE)
+    if ( missing(.school) ) {
+      out <- foreach(i = .spec$school_name, .combine = c) %do% {
+        prepareData(.raw_data=.raw_data, .school = i, .spec=.spec)
+      }
+      return(out)
+    }
 
- 	# More than one school
-	if (length(.school)>1) {
-		out<-
-		foreach( i = .school,.combine=c ) %do%{
-			prepareData(.raw_data,.school=i,.network=.network,.hobby=.hobby,.network_mode=.network_mode,.process_network=.process_network,.drop_by_case_id)
-		}
-		return(out)
-	}
+    data_wide <- getDataWide(.raw_data, .school)
 
-	# only one school
-	if (length(.network)==1) 
-		.network<-rep(.network,2)
+    network_matrix_list = 
+    lapply(.spec$network_info_list, function(x){
+      network_matrix1 = getNetwork(.raw_data, .school, x$definition[1])
+      network_matrix2 = getNetwork(.raw_data, .school, x$definition[2])
+      out = x$process_network(network_matrix1, network_matrix2, data_wide)
+      out
+    })
 
-	network_matrix1 <- getNetwork(.raw_data,.school,.network[1],.drop_by_case_id)
-	network_matrix2 <- getNetwork(.raw_data,.school,.network[2],.drop_by_case_id)
+    drop_case_id = .spec$findDropCaseID(data_wide, network_matrix_list)
 
 
-	if (is.function(.process_network)){
-		network_matrix1<- .process_network(network_matrix1)
-		network_matrix2<- .process_network(network_matrix2)
-	}
+    data_wide <- getDataWide(.raw_data, .school, drop_case_id)
 
-	data_wide <- getDataWide(.raw_data,.school,.drop_by_case_id)
+    network_matrix_list = 
+    lapply(.spec$network_info_list, function(x){
+      network_matrix1 = getNetwork(.raw_data, .school, x$definition[1], .drop_by_case_id=drop_case_id)
+      network_matrix2 = getNetwork(.raw_data, .school, x$definition[2], .drop_by_case_id=drop_case_id)
+      # out = process_network_function_example(network_matrix1, network_matrix2, data_wide)
+      out = x$process_network(network_matrix1, network_matrix2, data_wide)
+      out
+    })
 
- 	network_matrix <- ToUndirectedGraph(.network_mode,network_matrix1,network_matrix2)
 
- 	H<-foreach (i = .hobby,.combine=c) %do% {
- 		out<-list(getHobby(.raw_data,.school,i,.drop_by_case_id))
- 		names(out)<-i
- 		out
- 	}
 
- 	out<-list(D=network_matrix,data=data_wide,H=H)   
- 	out<-list(out)
- 	names(out)<-.school
- 	return(out) 
+    H <- foreach(i = .spec$hobby, .combine = c) %do% {
+        out <- list(getHobby(.raw_data, .school, i, drop_case_id))
+        names(out) <- i
+        out
+    }
+
+    network_name = sapply(.spec$network_info_list, "[[", "name")
+
+    group_index = list(id=which( .school == .spec$school_name ), all=length(.spec$school_name))
+
+    # degree = sapply(network_matrix_list, rowSums)
+
+    # colnames(degree) = paste0(    network_name = sapply(.spec$network_info_list, "[[", "name") , "_degree")
+
+    # data_wide= cbind(data_wide, degree)
+
+
+    data_wide = cbind(data_wide, .spec$genNetworkStatistics(network_matrix_list) )
+
+
+    out <- list(network_matrix_list = network_matrix_list, data = data_wide, H = H, network_name=network_name,group_index=group_index)
+    out <- list(out)
+    names(out) <- .school
+    return(out)
 }
+
+
+
+
 
 #' Description splitNetworkData
 #' @name splitNetworkData
