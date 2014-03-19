@@ -5,24 +5,19 @@
   getHobby(.raw_data, .school, .hobby, .drop_by_case_id)
 }
 \arguments{
-  \item{.raw_data}{}
+  \item{.raw_data}{raw_data}
 
-  \item{.school}{}
+  \item{.school}{school}
 
-  \item{.hobby}{}
+  \item{.hobby}{hobby}
 
-  \item{.drop_by_case_id}{}
+  \item{.drop_by_case_id}{drop_by_case_id}
 }
 \value{
   value
 }
 \description{
   Description getHobby
-}
-\examples{
-\dontrun{
-
-}
 }
 \author{
   TszKin Julian Chan \email{ctszkin@gmail.com}

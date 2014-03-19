@@ -2,15 +2,12 @@
 #' @name readSpecification
 #' @aliases readSpecification
 #' @title readSpecification
-#' @param  path
-#' @param  type
+#' @param  path path
+#' @param  type type
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
+
 readSpecification<-function(path,type=c("all","network","hobby")){
   type<-match.arg(type)
 
@@ -46,15 +43,11 @@ readSpecification<-function(path,type=c("all","network","hobby")){
 #' @name getVariableName
 #' @aliases getVariableName
 #' @title getVariableName
-#' @param  type
-#' @param  spec
-#' @return value
+#' @param  type type
+#' @param  spec spec
+#' @return value value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
 getVariableName<-function(type=c("school","network","hobby"),spec){
   spec[[type]]
 }
@@ -63,15 +56,11 @@ getVariableName<-function(type=c("school","network","hobby"),spec){
 #' @name getFileName
 #' @aliases getFileName
 #' @title getFileName
-#' @param type
-#' @param spec
+#' @param type type
+#' @param spec spec
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
 getFileName<-function(type=c("network","hobby"),spec){
   start<-getVariableName("school",spec) %+% "_" %+% type %+% "_"
   end<-getVariableName(type,spec) 

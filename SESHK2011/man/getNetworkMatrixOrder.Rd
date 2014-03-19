@@ -5,20 +5,15 @@
   getNetworkMatrixOrder(.raw_data, .school)
 }
 \arguments{
-  \item{.raw_data}{}
+  \item{.raw_data}{raw_data}
 
-  \item{.school}{}
+  \item{.school}{school}
 }
 \value{
   value
 }
 \description{
   Description getNetworkMatrixOrder
-}
-\examples{
-\dontrun{
-
-}
 }
 \author{
   TszKin Julian Chan \email{ctszkin@gmail.com}

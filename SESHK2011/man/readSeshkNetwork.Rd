@@ -17,11 +17,6 @@
 \description{
   Description
 }
-\examples{
-\dontrun{
-
-}
-}
 \author{
   TszKin Julian Chan \email{ctszkin@gmail.com}
 }

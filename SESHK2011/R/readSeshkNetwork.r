@@ -7,10 +7,7 @@
 #' @return a raw_data 
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
+
 readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.6.2/"){
 	if (.version!="SESHK2011 - network - 0.6.2/")
 		warning("Only tested under 0.6.2. " %+% .version %+% " is not tested. Error may occur.")
@@ -111,15 +108,12 @@ readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.6.2/")
 #' @name getNetworkMatrixOrder
 #' @aliases getNetworkMatrixOrder
 #' @title getNetworkMatrixOrder
-#' @param .raw_data
-#' @param .school
+#' @param .raw_data raw_data
+#' @param .school school
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
+
 getNetworkMatrixOrder<-function(.raw_data,.school){
 	.raw_data[[ "network_matrix_order_" %+%  .school ]]
 }
@@ -128,16 +122,13 @@ getNetworkMatrixOrder<-function(.raw_data,.school){
 #' @name getDataWide
 #' @aliases getDataWide
 #' @title getDataWide
-#' @param  .raw_data
-#' @param  .school
-#' @param  .drop_by_case_id
+#' @param  .raw_data raw_data
+#' @param  .school school
+#' @param  .drop_by_case_id drop_by_case_id
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
+
 getDataWide<-function(.raw_data,.school,.drop_by_case_id){
 	stopifnot(.school %in% getVariableName("school",.raw_data$spec))
 
@@ -162,17 +153,14 @@ getDataWide<-function(.raw_data,.school,.drop_by_case_id){
 #' @name getNetwork
 #' @aliases getNetwork
 #' @title getNetwork
-#' @param  .raw_data
-#' @param  .school
-#' @param  .network
-#' @param  .drop_by_case_id
+#' @param  .raw_data raw_data
+#' @param  .school school
+#' @param  .network network
+#' @param  .drop_by_case_id drop_by_case_id
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
+
 getNetwork<-function(.raw_data,.school,.network,.drop_by_case_id){
 	stopifnot(.school %in% getVariableName("school",.raw_data$spec))
 	stopifnot(.network %in% getVariableName("network",.raw_data$spec))
@@ -192,17 +180,14 @@ getNetwork<-function(.raw_data,.school,.network,.drop_by_case_id){
 #' @name getHobby
 #' @aliases getHobby
 #' @title getHobby
-#' @param .raw_data
-#' @param .school
-#' @param .hobby
-#' @param .drop_by_case_id
+#' @param .raw_data raw_data
+#' @param .school school
+#' @param .hobby hobby
+#' @param .drop_by_case_id drop_by_case_id
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
+
 getHobby<-function(.raw_data,.school,.hobby,.drop_by_case_id){
 	stopifnot(.school %in% getVariableName("school",.raw_data$spec))
 	stopifnot(.hobby %in% getVariableName("hobby",.raw_data$spec))
@@ -221,20 +206,13 @@ getHobby<-function(.raw_data,.school,.hobby,.drop_by_case_id){
 #' @name prepareData
 #' @aliases prepareData
 #' @title prepareData
-#' @param  .raw_data
-#' @param  .spec
-#' @param .school
-#' @param .hobby
-#' @param .network_mode
-#' @param .process_network
-#' @param .drop_by_case_id
+#' @param .raw_data .raw_data
+#' @param .spec .spec
+#' @param .school .school
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
+
 prepareData <- function (.raw_data, .spec, .school ){
 
     # .hobby <- match.arg(.hobby, several.ok = TRUE)
@@ -304,27 +282,23 @@ prepareData <- function (.raw_data, .spec, .school ){
 #' @name extractData
 #' @aliases extractData
 #' @title extractData
-#' @param  spec
-#' @param  data
-#' @return value
+#' @param  .spec spec
+#' @param  .data data
+#' @return value value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
 
-extractData <- function(spec, data){
+extractData <- function(.spec, .data){
     
   # source("model_spec.r")
-  formula = spec$formula
-  network_formation_formula = Formula(spec$network_formation_formula)
+  formula = .spec$formula
+  network_formation_formula = Formula(.spec$network_formation_formula)
 
   
   f1 = formula(network_formation_formula,rhs=1)
 
   ## if there is fixed effect, take out the intercept
-  if ( !is.null(spec$network_formation_fixed_effect) && spec$network_formation_fixed_effect ){
+  if ( !is.null(.spec$network_formation_fixed_effect) && .spec$network_formation_fixed_effect ){
     f1 = update(f1, ~.+-1)
   }
 
@@ -337,24 +311,24 @@ extractData <- function(spec, data){
   }
   H_name <-  attr(terms(f2),"term.labels")
   
-  out<-getPairwiseFriendshipData(data,f1)
+  out<-getPairwiseFriendshipData(.data,f1)
   out$formula = formula
   out$network_formation_formula = network_formation_formula
 
 
   if (length(network_formation_formula)[2]==2){
-    H_pair<-sapply(data$H[H_name],genPairwiseHobbyData)
+    H_pair<-sapply(.data$H[H_name],genPairwiseHobbyData)
     out$self_data_matrix<-cbind(out$self_data_matrix,H_pair)
     out$friends_data_matrix<-cbind(out$friends_data_matrix,H_pair)
   }
   
   ## generate dummy matrix
-  if ( !is.null(spec$network_formation_fixed_effect) && spec$network_formation_fixed_effect ){
+  if ( !is.null(.spec$network_formation_fixed_effect) && .spec$network_formation_fixed_effect ){
     nn = NROW(out$self_data_matrix)
-    dummy_matrix = matrix(0, nrow=nn, ncol = data$group_index$all)
-    dummy_matrix[,data$group_index$id] = 1
+    dummy_matrix = matrix(0, nrow=nn, ncol = .data$group_index$all)
+    dummy_matrix[,.data$group_index$id] = 1
 
-    colnames(dummy_matrix) = spec$school_names
+    colnames(dummy_matrix) = .spec$school_names
 
     out$self_data_matrix = cbind(dummy_matrix,out$self_data_matrix)
     out$friends_data_matrix = cbind(dummy_matrix,out$friends_data_matrix)
@@ -370,10 +344,10 @@ extractData <- function(spec, data){
   # }
 
 # single network
-  out$D_list = data$network_matrix_list
+  out$D_list = .data$network_matrix_list
   out$W_list = lapply(out$D_list, generateWeighting)
 
-  y_x_wx = getXandWX(formula,data)
+  y_x_wx = getXandWX(formula,.data)
   out$y = y_x_wx$y
   out$x = y_x_wx$x
   out$wx = y_x_wx$wx
@@ -385,7 +359,7 @@ extractData <- function(spec, data){
   out$k_gamma = ncol(out$self_data_matrix)
 
   out$group_index = genPairwiseIndex(length(out$y))
-  out$network_name = data$network_name 
+  out$network_name = .data$network_name 
 
   return(out)
 }
@@ -396,15 +370,11 @@ extractData <- function(spec, data){
 #' @name getXandWX
 #' @aliases getXandWX
 #' @title getXandWX
-#' @param  formula
-#' @param  data
-#' @return value
+#' @param  formula formula
+#' @param  data data
+#' @return value value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
 
 
 getXandWX <- function(formula,data){
@@ -476,16 +446,12 @@ getXandWX <- function(formula,data){
 #' @name splitNetworkData
 #' @aliases splitNetworkData
 #' @title splitNetworkData
-#' @param  network_data
-#' @param  group
-#' @param  network_only
+#' @param  network_data network_data
+#' @param  group group
+#' @param  network_only network_only
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
 splitNetworkData<-function(network_data, group,network_only=FALSE){
 	data<-network_data$data
 	group_name <- as.vector(unique(data[[group]]))
@@ -510,16 +476,13 @@ splitNetworkData<-function(network_data, group,network_only=FALSE){
 #' @name ToUndirectedGraph
 #' @aliases ToUndirectedGraph
 #' @title ToUndirectedGraph
-#' @param  method
-#' @param  network_matrix1
-#' @param  network_matrix2
+#' @param  method method
+#' @param  network_matrix1 network_matrix1
+#' @param  network_matrix2 network_matrix2
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
+
 ToUndirectedGraph<-function(method=c("undirected_and","undirected_or","directed","directed_inversed"),network_matrix1,network_matrix2){
 
 	method<-match.arg(method)
@@ -547,15 +510,11 @@ ToUndirectedGraph<-function(method=c("undirected_and","undirected_or","directed"
 #' @name genModelData
 #' @aliases genModelData
 #' @title genModelData
-#' @param  .spec
-#' @param  save
-#' @return value
+#' @param  .spec .spec
+#' @param  save save
+#' @return value 
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
 
 genModelData <- function(.spec, save=FALSE){
   if (class(.spec)!="SESHK_Spec")
@@ -565,7 +524,7 @@ genModelData <- function(.spec, save=FALSE){
 
    data = prepareData(.raw_data=raw_data, .spec=.spec )
 
-   out = lapply(data, extractData, spec=.spec)
+   out = lapply(data, extractData, .spec=.spec)
    
   if (save){
     cat("Saving data to model_data.rData\n")
@@ -579,15 +538,11 @@ genModelData <- function(.spec, save=FALSE){
 #' @name genDataMatrix
 #' @aliases genDataMatrix
 #' @title genDataMatrix
-#' @param  data
-#' @param  any_wx
+#' @param  data data
+#' @param  any_wx any_wx
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
 
 genDataMatrix <- function(data, any_wx = TRUE){    
   Y = unlist( sapply(data, function(z) z$y ) )
@@ -619,14 +574,10 @@ genDataMatrix <- function(data, any_wx = TRUE){
 #' @name genNetworkData
 #' @aliases genNetworkData
 #' @title genNetworkData
-#' @param  data
+#' @param  data data
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-#' @examples  
-#' \dontrun{
-#' 
-#' } 
 
 genNetworkData <- function(data){
   lapply(data, function(x){
@@ -646,6 +597,7 @@ genNetworkData <- function(data){
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @keywords internal 
 #' @export
+
 generateWeighting<-function(D){
   W<-D/rowSums(D)
   W[is.nan(W)]<-0

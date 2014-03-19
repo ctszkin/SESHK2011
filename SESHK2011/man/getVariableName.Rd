@@ -6,20 +6,15 @@
     spec)
 }
 \arguments{
-  \item{type}{}
+  \item{type}{type}
 
-  \item{spec}{}
+  \item{spec}{spec}
 }
 \value{
-  value
+  value value
 }
 \description{
   Description getVariableName
-}
-\examples{
-\dontrun{
-
-}
 }
 \author{
   TszKin Julian Chan \email{ctszkin@gmail.com}

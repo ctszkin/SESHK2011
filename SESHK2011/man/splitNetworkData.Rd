@@ -6,22 +6,17 @@
     network_only = FALSE)
 }
 \arguments{
-  \item{network_data}{}
+  \item{network_data}{network_data}
 
-  \item{group}{}
+  \item{group}{group}
 
-  \item{network_only}{}
+  \item{network_only}{network_only}
 }
 \value{
   value
 }
 \description{
   Description splitNetworkData
-}
-\examples{
-\dontrun{
-
-}
 }
 \author{
   TszKin Julian Chan \email{ctszkin@gmail.com}

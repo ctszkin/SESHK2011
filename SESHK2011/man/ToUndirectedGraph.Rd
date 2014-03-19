@@ -6,22 +6,17 @@
     network_matrix1, network_matrix2)
 }
 \arguments{
-  \item{method}{}
+  \item{method}{method}
 
-  \item{network_matrix1}{}
+  \item{network_matrix1}{network_matrix1}
 
-  \item{network_matrix2}{}
+  \item{network_matrix2}{network_matrix2}
 }
 \value{
   value
 }
 \description{
   Description ToUndirectedGraph
-}
-\examples{
-\dontrun{
-
-}
 }
 \author{
   TszKin Julian Chan \email{ctszkin@gmail.com}

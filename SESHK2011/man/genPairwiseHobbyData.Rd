@@ -1,0 +1,20 @@
+\name{genPairwiseHobbyData}
+\alias{genPairwiseHobbyData}
+\title{genPairwiseHobbyData}
+\usage{
+  genPairwiseHobbyData(H)
+}
+\arguments{
+  \item{H}{H}
+}
+\value{
+  a vector
+}
+\description{
+  genPairwiseHobbyData
+}
+\author{
+  TszKin Julian Chan \email{ctszkin@gmail.com}
+}
+\keyword{internal}
+
