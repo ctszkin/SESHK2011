@@ -1,12 +1,5 @@
-Package: SESHK2011
-Type: Package
-Title: Secondary Education Survey of Hong Kong(SESHK)
-Version: 0.1.1
-Date: 07-05-2012
-Author: TszKin Julian Chan <ctszkin@gmail.com>
-Maintainer: TszKin Julian Chan <ctszkin@gmail.com>
-Description: Convert the stata format of SESHK2011-network (v0.6.0) created by Tom Lam into R data format. 
-License: GPL (>= 2)
-LazyLoad: yes
-Depends: testthat, Jmisc, foreach, foreach, foreign
-BugReports: TszKin Julian Chan <ctszkin@gmail.com>
+v0.1.1 07-05-2012
+First completed version. 
+
+v0.2 19-03-2014
+User can supply a specification and the program will return a object contains the data matrix. This object is ready for estimation. A specification file contains information about formula of the model, definition of matrix and all other information of how should the data be prepared.
