@@ -392,6 +392,84 @@ extractData <- function(spec, data){
 
 
 
+#' Description getXandWX
+#' @name getXandWX
+#' @aliases getXandWX
+#' @title getXandWX
+#' @param  formula
+#' @param  data
+#' @return value
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @export
+#' @examples  
+#' \dontrun{
+#' 
+#' } 
+
+
+getXandWX <- function(formula,data){
+  formula_F<-Formula(formula)
+  f1<-formula(formula_F,rhs=1)
+  
+  f2<-
+    if(length(formula_F)[2]==1) {
+      f1
+    } else {
+      formula(formula_F,rhs=2)
+    }
+  
+  var_f2 = sub("friends_","", attr( terms(f2),"term.labels"))
+  var_f2 = paste0("friends_",var_f2)
+
+  update_f2 = as.formula(".~.+" %+% paste(var_f2,collapse="+"))
+
+  f1_new = update.formula(f1,update_f2)
+
+  f1_new = update.formula(f1_new,.~.-1)
+
+  require_variable = unique(sub("friends_","",all.vars(f1_new)))
+  all_require_variable <- data$data[require_variable]
+
+  number_of_network = length(data$network_matrix_list)
+
+  wx_list = vector("list",number_of_network)
+
+  for (i in 1:number_of_network){
+    W =  generateWeighting(data$network_matrix_list[[i]]) 
+    WX <- as.data.frame(W %*% as.matrix(all_require_variable))
+    names(WX) <- paste0("friends_", names(WX) )
+    X_and_WX <- cbind(all_require_variable,WX)
+    y <- model.response(model.frame(f1_new,X_and_WX))
+    X <- model.matrix(f1_new,X_and_WX)
+    contain_friends_index <- grep("friends_",colnames(X))
+    # replace the friends_ with network name
+     wx = X[,contain_friends_index]
+     colnames(wx) = gsub("friends", data$network_name[[i]], colnames(wx))
+     wx_list[[i]] =wx 
+  }
+
+  x = X[,-contain_friends_index]
+
+  wx = do.call(cbind,wx_list)
+
+  wy = sapply(data$network_matrix_list, function(x){
+    generateWeighting(x) %*% y
+    }) 
+  colnames(wy) = "lambda_" %+% colnames(wy)
+
+  X = cbind(x,wx)
+
+  y = demean(y)
+  x = demean(x)
+  wx = demean(wx)
+  wy = demean(wy)
+
+
+  w2x = demean(W%*%wx)
+  return(list(y=y, wy=wy, X=cbind(x,wx), x=x,wx=wx))
+}
+
+
 
 
 #' Description splitNetworkData
