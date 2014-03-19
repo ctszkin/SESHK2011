@@ -300,6 +300,98 @@ prepareData <- function (.raw_data, .spec, .school ){
 
 
 
+#' Description extract Data
+#' @name extractData
+#' @aliases extractData
+#' @title extractData
+#' @param  spec
+#' @param  data
+#' @return value
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @export
+#' @examples  
+#' \dontrun{
+#' 
+#' } 
+
+extractData <- function(spec, data){
+    
+  # source("model_spec.r")
+  formula = spec$formula
+  network_formation_formula = Formula(spec$network_formation_formula)
+
+  
+  f1 = formula(network_formation_formula,rhs=1)
+
+  ## if there is fixed effect, take out the intercept
+  if ( !is.null(spec$network_formation_fixed_effect) && spec$network_formation_fixed_effect ){
+    f1 = update(f1, ~.+-1)
+  }
+
+  other_network_variables<-NULL
+  use_network_variable<-FALSE
+  if (length(network_formation_formula)[2]==2){
+    use_network_variable<-TRUE
+    f2<-formula(network_formation_formula,rhs=2)
+    other_network_variables<-attr(terms(f2),"term.labels")
+  }
+  H_name <-  attr(terms(f2),"term.labels")
+  
+  out<-getPairwiseFriendshipData(data,f1)
+  out$formula = formula
+  out$network_formation_formula = network_formation_formula
+
+
+  if (length(network_formation_formula)[2]==2){
+    H_pair<-sapply(data$H[H_name],genPairwiseHobbyData)
+    out$self_data_matrix<-cbind(out$self_data_matrix,H_pair)
+    out$friends_data_matrix<-cbind(out$friends_data_matrix,H_pair)
+  }
+  
+  ## generate dummy matrix
+  if ( !is.null(spec$network_formation_fixed_effect) && spec$network_formation_fixed_effect ){
+    nn = NROW(out$self_data_matrix)
+    dummy_matrix = matrix(0, nrow=nn, ncol = data$group_index$all)
+    dummy_matrix[,data$group_index$id] = 1
+
+    colnames(dummy_matrix) = spec$school_names
+
+    out$self_data_matrix = cbind(dummy_matrix,out$self_data_matrix)
+    out$friends_data_matrix = cbind(dummy_matrix,out$friends_data_matrix)
+  }
+
+  # TODO: add seat assignment here
+  # out$response1 <- as.logical(out$response)
+  # out$response <- list(response1=out$response1)
+  
+  # if(!single_network){
+  #   out$response2 <- as.logical(out2$response)
+  #   out$response$response2 = out$response2
+  # }
+
+# single network
+  out$D_list = data$network_matrix_list
+  out$W_list = lapply(out$D_list, generateWeighting)
+
+  y_x_wx = getXandWX(formula,data)
+  out$y = y_x_wx$y
+  out$x = y_x_wx$x
+  out$wx = y_x_wx$wx
+  out$wy = y_x_wx$wy
+  out$x_wx = y_x_wx$X
+
+  out$n = length(out$y)
+  out$k_x_wx = ncol(out$x_wx)
+  out$k_gamma = ncol(out$self_data_matrix)
+
+  out$group_index = genPairwiseIndex(length(out$y))
+  out$network_name = data$network_name 
+
+  return(out)
+}
+
+
+
 
 
 #' Description splitNetworkData
@@ -373,3 +465,33 @@ ToUndirectedGraph<-function(method=c("undirected_and","undirected_or","directed"
 	return(network_matrix)
 }
 
+#' Description genModelData
+#' @name genModelData
+#' @aliases genModelData
+#' @title genModelData
+#' @param  .spec
+#' @param  save
+#' @return value
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @export
+#' @examples  
+#' \dontrun{
+#' 
+#' } 
+
+genModelData <- function(.spec, save=FALSE){
+  if (class(.spec)!="SESHK_Spec")
+    stop("spec must be an SESHK_Spec object")
+
+   raw_data<-readSeshkNetwork(.version = "../../" %+% .spec$data_version %+% "/")
+
+   data = prepareData(.raw_data=raw_data, .spec=.spec )
+
+   out = lapply(data, extractData, spec=.spec)
+   
+  if (save){
+    cat("Saving data to model_data.rData\n")
+    save(out,file="model_data.rData")
+  }
+  return(out)
+}
