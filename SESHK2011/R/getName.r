@@ -93,11 +93,109 @@ getFileName<-function(type=c("network","hobby"),spec){
 }
 
 
+#' genPairwiseIndex 
+#' @name genPairwiseIndex
+#' @aliases genPairwiseIndex
+#' @title genPairwiseIndex
+#' @param n
+#' @return data.frame
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @keywords internal 
+#' @export
+genPairwiseIndex = cmpfun(function(n){
+  # i<- foreach( i=2:n,.combine=c ) %do% seq(from=i,to=n)
+  i = unlist(lapply(2:n, seq, to=n))
+  j = rep(1:(n-1),times=(n-1):1)
+  cbind(i,j)
+})
+
+
+#' getPairwiseFriendshipData 
+#' @name getPairwiseFriendshipData
+#' @aliases getPairwiseFriendshipData
+#' @title getPairwiseFriendshipData
+#' @param network_data network_data
+#' @param network_formation_formula network_formation_formula
+#' @return A data.frame consist of the estimates.
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @keywords internal 
+#' @export
+getPairwiseFriendshipData<-cmpfun(function(network_data,network_formation_formula){
+  data<-network_data$data
+  n <- nrow(data)
+  require_variable <-unique(sub("friends_","",all.vars(network_formation_formula)))
+
+  require_variable <- setdiff(require_variable,".")
+
+  data<-data[require_variable]
+  
+  pairwise_index = genPairwiseIndex(n)
+
+  i = pairwise_index[,1]
+  j = pairwise_index[,2]
+  
+  name_of_self_data <- names(data)
+  name_of_friends_data <- paste("friends_",name_of_self_data,sep="")
+  
+  self_data <- data.frame(data[i,])
+  
+  friends_data <- data.frame(data[j,])
+  names(self_data)<-name_of_self_data
+  names(friends_data)<-name_of_friends_data
+  
+  self_data_matrix <- model.matrix(network_formation_formula,cbind(self_data,friends_data))
+
+  names(friends_data)<-name_of_self_data
+  names(self_data)<-name_of_friends_data
+  
+  friends_data_matrix <- model.matrix(network_formation_formula,cbind(self_data,friends_data))
+
+  D<-network_data$network_matrix_list
+  response_self = sapply(D, function(x) x[lower.tri(x)] )
+  response_friends = sapply(D, function(x) t(x)[lower.tri(t(x))] )
+
+  response_self=!!response_self
+  response_friends=!!response_friends
+
+  list(response_self=response_self, response_friends=response_friends,self_data_matrix=self_data_matrix,friends_data_matrix=friends_data_matrix)
+})
+
+#' genPairwiseHobbyData 
+#' @name genPairwiseHobbyData
+#' @aliases genPairwiseHobbyData
+#' @title genPairwiseHobbyData
+#' @param H H
+#' @return a vector
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @keywords internal 
+#' @export
+genPairwiseHobbyData<-cmpfun(function(H){
+  tHH<-tcrossprod(H)
+  # stopifnot(nrow(tHH)==ncol(tHH))
+  n<-nrow(tHH)
+
+  index<-genPairwiseIndex(n)
+  index2= (index[,1]-1) * n + index[,2]
+
+  tHH[index2]
+})
 
 
 
-
-
+#' generateWeighting 
+#' @name generateWeighting
+#' @aliases generateWeighting
+#' @title generateWeighting
+#' @param D a network matrix
+#' @return weighting matrix
+#' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
+#' @keywords internal 
+#' @export
+generateWeighting<-cmpfun(function(D){
+  W<-D/rowSums(D)
+  W[is.nan(W)]<-0
+  W
+})
 
 
 
