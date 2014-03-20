@@ -9,8 +9,10 @@
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
 
-genSpecStandardMath <- function(){
+genSpecStandardMath <- function(network=c("all","friends","studymates")){
 
+  network = match.arg(network)
+  
   data_version = "SESHK2011 - network - 0.7.10"
 
   school_names <- c("kslo","lskc","thf1","thf2","thf3")
@@ -165,18 +167,24 @@ genSpecStandardMath <- function(){
 
 	## If you want to have more than two raw network matrices, you can set definition=c("network_1","network_2","network_3")
 	## Of course, you can just use one network!
-  network_info_list = list(
-    friends=list(
-      name="friends",
-      definition=c("my_friends","my_friends"),
-      process_network=process_network_function_friends)
-    , 
-    studymates=list(
-      name="studymates",
-      definition=c("help_me_school","help_them_school"),
-      process_network=process_network_function_studymates)
-  )
 
+
+	friends_network_info=list(
+	  name="friends",
+	  definition=c("my_friends","my_friends"),
+	  process_network=process_network_function_friends)
+
+	studymates_network_info=list(
+	  name="studymates",
+	  definition=c("help_me_school","help_them_school"),
+	  process_network=process_network_function_studymates)
+
+  network_info_list=
+  	switch(network, 
+        all = list(friends=friends_network_info, studymates= studymates_network_info),
+        friends = list(friends=friends_network_info),
+        studymates = list(studymates=studymates_network_info)
+      )
 
   out = list(
     data_version=data_version,
