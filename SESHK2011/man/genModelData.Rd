@@ -2,12 +2,14 @@
 \alias{genModelData}
 \title{genModelData}
 \usage{
-genModelData(.spec, save = FALSE)
+genModelData(.spec, save = FALSE, path = "")
 }
 \arguments{
   \item{.spec}{.spec}
 
   \item{save}{save}
+
+  \item{path}{path}
 }
 \value{
 value

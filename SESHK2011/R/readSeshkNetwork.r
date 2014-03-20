@@ -7,16 +7,15 @@
 #' @return a raw_data 
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-
 readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.7.10/"){
-	if (.version!="SESHK2011 - network - 0.7.10/")
+	if (.version!="SESHK2011 - network - 0.7.10")
 		warning("Only tested under 0.7.10. " %+% .version %+% " is not tested. Error may occur.")
 
 	path<-
 	if (missing(.data_source))
-		.version
+		.version %+% "/"
 	else
- 		.data_source %+% "/" %+% .version
+ 		.data_source %+% "/" %+% .version %+% "/"
 
   	spec<-readSpecification(path)
   	
@@ -236,10 +235,10 @@ prepareData <- function (.raw_data, .spec, .school ){
       network_matrix_list = lapply(x$definition, getNetwork, .raw_data=.raw_data, .school=.school)
 
       ## make sure it is backward backward compatible with previous version 
-      if ( length(formals(x$process_network))==2 & length(network_matrix_list) == 2 ){
-        out = x$process_network(network_matrix_list[[1]], network_matrix_list[[2]], data_wide)
+      if ( length(formals(x$process_network))==3 & length(network_matrix_list) == 2 ){
+        out = x$process_network(network_matrix_list[[1]], network_matrix_list[[2]], data_wide=data_wide)
       }
-        out = x$process_network(network_matrix_list, data_wide)
+        out = x$process_network(network_matrix_list, data_wide=data_wide)
 
       out
     })
@@ -264,7 +263,7 @@ prepareData <- function (.raw_data, .spec, .school ){
       
       network_matrix_list = lapply(x$definition, getNetwork, .raw_data=.raw_data, .school=.school, .drop_by_case_id=drop_case_id)
 
-      if ( length(formals(x$process_network))==2 & length(network_matrix_list) == 2 ){
+      if ( length(formals(x$process_network))==3 & length(network_matrix_list) == 2 ){
         out = x$process_network(network_matrix_list[[1]], network_matrix_list[[2]], data_wide)
       }
         out = x$process_network(network_matrix_list, data_wide)
@@ -537,17 +536,18 @@ ToUndirectedGraph<-function(method=c("undirected_and","undirected_or","directed"
 #' @name genModelData
 #' @aliases genModelData
 #' @title genModelData
-#' @param  .spec .spec
-#' @param  save save
+#' @param .spec .spec
+#' @param save save
+#' @param path path
 #' @return value 
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
 
-genModelData <- function(.spec, save=FALSE){
+genModelData <- function(.spec, save=FALSE, path=""){
   if (class(.spec)!="SESHK_Spec")
     stop("spec must be an SESHK_Spec object")
 
-   raw_data<-readSeshkNetwork(.version = "../../" %+% .spec$data_version %+% "/")
+   raw_data<-readSeshkNetwork(.version = .spec$data_version)
 
    data = prepareData(.raw_data=raw_data, .spec=.spec )
 
