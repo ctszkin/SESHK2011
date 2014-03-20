@@ -38,7 +38,7 @@ genSpecStandardMath <- function(network=c("all","friends","studymates"), network
     unique(drop_case_ID)
   }
 
-  hobby = c("art","ballsport","chinesemusic","class","detail","everything","interest","music","sport","team","westernmusic" )
+  # hobby = c("art","ballsport","chinesemusic","class","detail","everything","interest","music","sport","team","westernmusic" )
 
   network_formation_fixed_effect = network_formation_fixed_effect
 
@@ -161,7 +161,7 @@ genSpecStandardMath <- function(network=c("all","friends","studymates"), network
     + I(abs(((play_any_music>0)+0)-((friends_play_any_music>0)+0))) 
     + I(abs(((play_any_sport>0)+0)-((friends_play_any_sport>0)+0))) 
     + I(abs(((play_team>0)+0)-((friends_play_team>0)+0))) 
-    | music + sport + team + class) 
+    # | music + sport + team + class) 
 
 
 	## If you want to have more than two raw network matrices, you can set definition=c("network_1","network_2","network_3")
@@ -188,7 +188,7 @@ genSpecStandardMath <- function(network=c("all","friends","studymates"), network
   out = list(
     data_version=data_version,
     school_names=school_names, 
-    hobby=hobby,
+    # hobby=hobby,
     findDropCaseID=findDropCaseID, 
     formula=formula, 
     network_formation_formula = network_formation_formula, 
