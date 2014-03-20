@@ -3,11 +3,12 @@
 #' @aliases genSpecStandardMath
 #' @title genSpecStandardMath
 #' @param network network = "all" gives friends and studymates networks. network = "friends" gives friends network only. network = studymates gives studymates network only.
+#' @param network_formation_fixed_effect Default=FALSE
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
 
-genSpecStandardMath <- function(network=c("all","friends","studymates")){
+genSpecStandardMath <- function(network=c("all","friends","studymates"), network_formation_fixed_effect = FALSE){
 
   network = match.arg(network)
   
@@ -39,7 +40,7 @@ genSpecStandardMath <- function(network=c("all","friends","studymates")){
 
   hobby = c("art","ballsport","chinesemusic","class","detail","everything","interest","music","sport","team","westernmusic" )
 
-  network_formation_fixed_effect = FALSE
+  network_formation_fixed_effect = network_formation_fixed_effect
 
   ## in the process network function, you can design the value of the network matrix. 
   ## For example, you can set the network connection to be 0 if data_wide$tutorial of both agent are not zero
