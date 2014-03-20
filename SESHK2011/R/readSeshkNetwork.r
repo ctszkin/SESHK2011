@@ -277,12 +277,12 @@ prepareData <- function (.raw_data, .spec, .school ){
 
 
 
-    i <- NULL
-    H <- foreach(i = .spec$hobby, .combine = c) %do% {
-        out <- list(getHobby(.raw_data, .school, i, drop_case_id))
-        names(out) <- i
-        out
-    }
+    # i <- NULL
+    # H <- foreach(i = .spec$hobby, .combine = c) %do% {
+    #     out <- list(getHobby(.raw_data, .school, i, drop_case_id))
+    #     names(out) <- i
+    #     out
+    # }
 
     network_name = sapply(.spec$network_info_list, "[[", "name")
 
@@ -298,7 +298,8 @@ prepareData <- function (.raw_data, .spec, .school ){
     data_wide = cbind(data_wide, .spec$genNetworkStatistics(network_matrix_list) )
 
 
-    out <- list(network_matrix_list = network_matrix_list, data = data_wide, H = H, network_name=network_name,group_index=group_index)
+    # out <- list(network_matrix_list = network_matrix_list, data = data_wide, H = H, network_name=network_name,group_index=group_index)
+    out <- list(network_matrix_list = network_matrix_list, data = data_wide, network_name=network_name,group_index=group_index)
     out <- list(out)
     names(out) <- .school
     return(out)
