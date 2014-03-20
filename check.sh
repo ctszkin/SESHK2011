@@ -1,1 +1,1 @@
-R CMD check SESHK2011
+R CMD check SESHK2011 --as-cran
