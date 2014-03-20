@@ -3,14 +3,14 @@
 #' @aliases readSeshkNetwork
 #' @title readSeshkNetwork
 #' @param .data_source path
-#' @param .version Version number. Default is "SESHK2011 - network - 0.6.2/"
+#' @param .version Version number. Default is "SESHK2011 - network - 0.7.10/"
 #' @return a raw_data 
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
 
 readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.6.2/"){
-	if (.version!="SESHK2011 - network - 0.6.2/")
-		warning("Only tested under 0.6.2. " %+% .version %+% " is not tested. Error may occur.")
+	if (.version!="SESHK2011 - network - 0.7.10/")
+		warning("Only tested under 0.7.10. " %+% .version %+% " is not tested. Error may occur.")
 
 	path<-
 	if (missing(.data_source))
@@ -230,9 +230,16 @@ prepareData <- function (.raw_data, .spec, .school ){
 
     network_matrix_list = 
     lapply(.spec$network_info_list, function(x){
-      network_matrix1 = getNetwork(.raw_data, .school, x$definition[1])
-      network_matrix2 = getNetwork(.raw_data, .school, x$definition[2])
-      out = x$process_network(network_matrix1, network_matrix2, data_wide)
+      # network_matrix1 = getNetwork(.raw_data, .school, x$definition[1])
+      # network_matrix2 = getNetwork(.raw_data, .school, x$definition[2])
+      
+      network_matrix_list = lapply(x$definition, getNetwork, .raw_data=.raw_data, .school=.school)
+
+      if ( length(formals(x$process_network))==2 & length(network_matrix_list) == 2 ){
+        out = x$process_network(network_matrix_list[[1]], network_matrix_list[[2]], data_wide)
+      }
+        out = x$process_network(network_matrix_list, data_wide)
+
       out
     })
 
@@ -241,14 +248,31 @@ prepareData <- function (.raw_data, .spec, .school ){
 
     data_wide <- getDataWide(.raw_data, .school, drop_case_id)
 
+    # network_matrix_list = 
+    # lapply(.spec$network_info_list, function(x){
+    #   network_matrix1 = getNetwork(.raw_data, .school, x$definition[1], .drop_by_case_id=drop_case_id)
+    #   network_matrix2 = getNetwork(.raw_data, .school, x$definition[2], .drop_by_case_id=drop_case_id)
+    #   # out = process_network_function_example(network_matrix1, network_matrix2, data_wide)
+    #   out = x$process_network(network_matrix1, network_matrix2, data_wide)
+    #   out
+    # })
     network_matrix_list = 
     lapply(.spec$network_info_list, function(x){
-      network_matrix1 = getNetwork(.raw_data, .school, x$definition[1], .drop_by_case_id=drop_case_id)
-      network_matrix2 = getNetwork(.raw_data, .school, x$definition[2], .drop_by_case_id=drop_case_id)
-      # out = process_network_function_example(network_matrix1, network_matrix2, data_wide)
-      out = x$process_network(network_matrix1, network_matrix2, data_wide)
+      # network_matrix1 = getNetwork(.raw_data, .school, x$definition[1])
+      # network_matrix2 = getNetwork(.raw_data, .school, x$definition[2])
+      
+      network_matrix_list = lapply(x$definition, getNetwork, .raw_data=.raw_data, .school=.school, .drop_by_case_id=drop_case_id)
+
+      if ( length(formals(x$process_network))==2 & length(network_matrix_list) == 2 ){
+        out = x$process_network(network_matrix_list[[1]], network_matrix_list[[2]], data_wide)
+      }
+        out = x$process_network(network_matrix_list, data_wide)
+
       out
     })
+
+
+
 
 
     i <- NULL
