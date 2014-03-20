@@ -331,25 +331,25 @@ extractData <- function(.spec, .data){
     f1 = update(f1, ~.+-1)
   }
 
-  other_network_variables<-NULL
-  use_network_variable<-FALSE
-  if (length(network_formation_formula)[2]==2){
-    use_network_variable<-TRUE
-    f2<-formula(network_formation_formula,rhs=2)
-    other_network_variables<-attr(terms(f2),"term.labels")
-  }
-  H_name <-  attr(terms(f2),"term.labels")
+  # other_network_variables<-NULL
+  # use_network_variable<-FALSE
+  # if (length(network_formation_formula)[2]==2){
+  #   use_network_variable<-TRUE
+  #   f2<-formula(network_formation_formula,rhs=2)
+  #   other_network_variables<-attr(terms(f2),"term.labels")
+  # }
+  # H_name <-  attr(terms(f2),"term.labels")
   
   out<-getPairwiseFriendshipData(.data,f1)
   out$formula = formula
   out$network_formation_formula = network_formation_formula
 
 
-  if (length(network_formation_formula)[2]==2){
-    H_pair<-sapply(.data$H[H_name],genPairwiseHobbyData)
-    out$self_data_matrix<-cbind(out$self_data_matrix,H_pair)
-    out$friends_data_matrix<-cbind(out$friends_data_matrix,H_pair)
-  }
+  # if (length(network_formation_formula)[2]==2){
+  #   H_pair<-sapply(.data$H[H_name],genPairwiseHobbyData)
+  #   out$self_data_matrix<-cbind(out$self_data_matrix,H_pair)
+  #   out$friends_data_matrix<-cbind(out$friends_data_matrix,H_pair)
+  # }
   
   ## generate dummy matrix
   if ( !is.null(.spec$network_formation_fixed_effect) && .spec$network_formation_fixed_effect ){
