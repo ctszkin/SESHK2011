@@ -235,6 +235,7 @@ prepareData <- function (.raw_data, .spec, .school ){
       
       network_matrix_list = lapply(x$definition, getNetwork, .raw_data=.raw_data, .school=.school)
 
+      ## make sure it is backward backward compatible with previous version 
       if ( length(formals(x$process_network))==2 & length(network_matrix_list) == 2 ){
         out = x$process_network(network_matrix_list[[1]], network_matrix_list[[2]], data_wide)
       }
