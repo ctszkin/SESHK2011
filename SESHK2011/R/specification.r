@@ -1,10 +1,8 @@
-#' Description prepareDataprepareData
-#' @name prepareData
-#' @aliases prepareData
-#' @title prepareData
-#' @param .raw_data .raw_data
-#' @param .spec .spec
-#' @param .school .school
+#' Description genSpecStandardMath
+#' @name genSpecStandardMath
+#' @aliases genSpecStandardMath
+#' @title genSpecStandardMath
+#' @param network network = "all" gives friends and studymates networks. network = "friends" gives friends network only. network = studymates gives studymates network only.
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export

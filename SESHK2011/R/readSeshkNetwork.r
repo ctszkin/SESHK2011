@@ -8,7 +8,7 @@
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
 
-readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.6.2/"){
+readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.7.10/"){
 	if (.version!="SESHK2011 - network - 0.7.10/")
 		warning("Only tested under 0.7.10. " %+% .version %+% " is not tested. Error may occur.")
 
@@ -204,7 +204,7 @@ getHobby<-function(.raw_data,.school,.hobby,.drop_by_case_id){
 	out
 }	
 
-#' Description prepareDataprepareData
+#' Description prepareData
 #' @name prepareData
 #' @aliases prepareData
 #' @title prepareData

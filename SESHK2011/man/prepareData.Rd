@@ -15,7 +15,7 @@ prepareData(.raw_data, .spec, .school)
 value
 }
 \description{
-Description prepareDataprepareData
+Description prepareData
 }
 \author{
 TszKin Julian Chan \email{ctszkin@gmail.com}
