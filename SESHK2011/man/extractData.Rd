@@ -2,7 +2,7 @@
 \alias{extractData}
 \title{extractData}
 \usage{
-  extractData(.spec, .data)
+extractData(.spec, .data)
 }
 \arguments{
   \item{.spec}{spec}
@@ -10,12 +10,12 @@
   \item{.data}{data}
 }
 \value{
-  value value
+value value
 }
 \description{
-  Description extract Data
+Description extract Data
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

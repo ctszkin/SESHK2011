@@ -2,7 +2,7 @@
 \alias{getDataWide}
 \title{getDataWide}
 \usage{
-  getDataWide(.raw_data, .school, .drop_by_case_id)
+getDataWide(.raw_data, .school, .drop_by_case_id)
 }
 \arguments{
   \item{.raw_data}{raw_data}
@@ -12,12 +12,12 @@
   \item{.drop_by_case_id}{drop_by_case_id}
 }
 \value{
-  value
+value
 }
 \description{
-  Description getDataWide
+Description getDataWide
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

@@ -2,8 +2,8 @@
 \alias{ToUndirectedGraph}
 \title{ToUndirectedGraph}
 \usage{
-  ToUndirectedGraph(method = c("undirected_and", "undirected_or", "directed", "directed_inversed"),
-    network_matrix1, network_matrix2)
+ToUndirectedGraph(method = c("undirected_and", "undirected_or", "directed",
+  "directed_inversed"), network_matrix1, network_matrix2)
 }
 \arguments{
   \item{method}{method}
@@ -13,12 +13,12 @@
   \item{network_matrix2}{network_matrix2}
 }
 \value{
-  value
+value
 }
 \description{
-  Description ToUndirectedGraph
+Description ToUndirectedGraph
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

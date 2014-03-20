@@ -2,8 +2,7 @@
 \alias{readSeshkNetwork}
 \title{readSeshkNetwork}
 \usage{
-  readSeshkNetwork(.data_source,
-    .version = "SESHK2011 - network - 0.6.2/")
+readSeshkNetwork(.data_source, .version = "SESHK2011 - network - 0.6.2/")
 }
 \arguments{
   \item{.data_source}{path}
@@ -12,12 +11,12 @@
   network - 0.6.2/"}
 }
 \value{
-  a raw_data
+a raw_data
 }
 \description{
-  Description
+Description
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

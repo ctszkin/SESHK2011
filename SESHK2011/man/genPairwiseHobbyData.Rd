@@ -2,19 +2,19 @@
 \alias{genPairwiseHobbyData}
 \title{genPairwiseHobbyData}
 \usage{
-  genPairwiseHobbyData(H)
+genPairwiseHobbyData(H)
 }
 \arguments{
   \item{H}{H}
 }
 \value{
-  a vector
+a vector
 }
 \description{
-  genPairwiseHobbyData
+genPairwiseHobbyData
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 \keyword{internal}
 

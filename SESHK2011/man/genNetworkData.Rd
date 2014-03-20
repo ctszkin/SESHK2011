@@ -2,18 +2,18 @@
 \alias{genNetworkData}
 \title{genNetworkData}
 \usage{
-  genNetworkData(data)
+genNetworkData(data)
 }
 \arguments{
   \item{data}{data}
 }
 \value{
-  value
+value
 }
 \description{
-  Description genNetworkData
+Description genNetworkData
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

@@ -2,7 +2,7 @@
 \alias{genDataMatrix}
 \title{genDataMatrix}
 \usage{
-  genDataMatrix(data, any_wx = TRUE)
+genDataMatrix(data, any_wx = TRUE)
 }
 \arguments{
   \item{data}{data}
@@ -10,12 +10,12 @@
   \item{any_wx}{any_wx}
 }
 \value{
-  value
+value
 }
 \description{
-  Description genDataMatrix
+Description genDataMatrix
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

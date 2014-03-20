@@ -2,7 +2,7 @@
 \alias{getFileName}
 \title{getFileName}
 \usage{
-  getFileName(type = c("network", "hobby"), spec)
+getFileName(type = c("network", "hobby"), spec)
 }
 \arguments{
   \item{type}{type}
@@ -10,12 +10,12 @@
   \item{spec}{spec}
 }
 \value{
-  value
+value
 }
 \description{
-  Description getFileName
+Description getFileName
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

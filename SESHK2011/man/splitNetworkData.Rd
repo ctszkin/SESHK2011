@@ -2,8 +2,7 @@
 \alias{splitNetworkData}
 \title{splitNetworkData}
 \usage{
-  splitNetworkData(network_data, group,
-    network_only = FALSE)
+splitNetworkData(network_data, group, network_only = FALSE)
 }
 \arguments{
   \item{network_data}{network_data}
@@ -13,12 +12,12 @@
   \item{network_only}{network_only}
 }
 \value{
-  value
+value
 }
 \description{
-  Description splitNetworkData
+Description splitNetworkData
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

@@ -2,7 +2,7 @@
 \alias{prepareData}
 \title{prepareData}
 \usage{
-  prepareData(.raw_data, .spec, .school)
+prepareData(.raw_data, .spec, .school)
 }
 \arguments{
   \item{.raw_data}{.raw_data}
@@ -12,12 +12,12 @@
   \item{.school}{.school}
 }
 \value{
-  value
+value
 }
 \description{
-  Description prepareDataprepareData
+Description prepareDataprepareData
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

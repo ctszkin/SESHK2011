@@ -19,6 +19,8 @@ readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.6.2/")
  		.data_source %+% "/" %+% .version
 
   	spec<-readSpecification(path)
+  	
+  	i=j=NULL
 
 	# read network data
 	all_network_data<-  
@@ -249,7 +251,7 @@ prepareData <- function (.raw_data, .spec, .school ){
     })
 
 
-
+    i <- NULL
     H <- foreach(i = .spec$hobby, .combine = c) %do% {
         out <- list(getHobby(.raw_data, .school, i, drop_case_id))
         names(out) <- i
@@ -455,7 +457,7 @@ getXandWX <- function(formula,data){
 splitNetworkData<-function(network_data, group,network_only=FALSE){
 	data<-network_data$data
 	group_name <- as.vector(unique(data[[group]]))
-	
+	i = NULL
 	if (network_only){
 		foreach ( i = group_name ) %do% {
 			index <- which(data[group]==i)

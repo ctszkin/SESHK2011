@@ -2,8 +2,7 @@
 \alias{getNetwork}
 \title{getNetwork}
 \usage{
-  getNetwork(.raw_data, .school, .network,
-    .drop_by_case_id)
+getNetwork(.raw_data, .school, .network, .drop_by_case_id)
 }
 \arguments{
   \item{.raw_data}{raw_data}
@@ -15,12 +14,12 @@
   \item{.drop_by_case_id}{drop_by_case_id}
 }
 \value{
-  value
+value
 }
 \description{
-  Description getNetwork
+Description getNetwork
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

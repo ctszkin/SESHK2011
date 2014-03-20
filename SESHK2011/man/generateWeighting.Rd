@@ -2,19 +2,19 @@
 \alias{generateWeighting}
 \title{generateWeighting}
 \usage{
-  generateWeighting(D)
+generateWeighting(D)
 }
 \arguments{
   \item{D}{a network matrix}
 }
 \value{
-  weighting matrix
+weighting matrix
 }
 \description{
-  generateWeighting
+generateWeighting
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 \keyword{internal}
 

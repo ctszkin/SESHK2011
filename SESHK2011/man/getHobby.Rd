@@ -2,7 +2,7 @@
 \alias{getHobby}
 \title{getHobby}
 \usage{
-  getHobby(.raw_data, .school, .hobby, .drop_by_case_id)
+getHobby(.raw_data, .school, .hobby, .drop_by_case_id)
 }
 \arguments{
   \item{.raw_data}{raw_data}
@@ -14,12 +14,12 @@
   \item{.drop_by_case_id}{drop_by_case_id}
 }
 \value{
-  value
+value
 }
 \description{
-  Description getHobby
+Description getHobby
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

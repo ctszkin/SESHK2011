@@ -2,7 +2,7 @@
 \alias{genModelData}
 \title{genModelData}
 \usage{
-  genModelData(.spec, save = FALSE)
+genModelData(.spec, save = FALSE)
 }
 \arguments{
   \item{.spec}{.spec}
@@ -10,12 +10,12 @@
   \item{save}{save}
 }
 \value{
-  value
+value
 }
 \description{
-  Description genModelData
+Description genModelData
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 

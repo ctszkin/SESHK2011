@@ -2,19 +2,19 @@
 \alias{genPairwiseIndex}
 \title{genPairwiseIndex}
 \usage{
-  genPairwiseIndex(n)
+genPairwiseIndex(n)
 }
 \arguments{
   \item{n}{}
 }
 \value{
-  data.frame
+data.frame
 }
 \description{
-  genPairwiseIndex
+genPairwiseIndex
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 \keyword{internal}
 

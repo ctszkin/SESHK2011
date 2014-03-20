@@ -2,7 +2,7 @@
 \alias{getNetworkMatrixOrder}
 \title{getNetworkMatrixOrder}
 \usage{
-  getNetworkMatrixOrder(.raw_data, .school)
+getNetworkMatrixOrder(.raw_data, .school)
 }
 \arguments{
   \item{.raw_data}{raw_data}
@@ -10,12 +10,12 @@
   \item{.school}{school}
 }
 \value{
-  value
+value
 }
 \description{
-  Description getNetworkMatrixOrder
+Description getNetworkMatrixOrder
 }
 \author{
-  TszKin Julian Chan \email{ctszkin@gmail.com}
+TszKin Julian Chan \email{ctszkin@gmail.com}
 }
 
