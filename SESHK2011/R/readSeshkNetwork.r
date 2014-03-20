@@ -81,27 +81,29 @@ readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.7.10/"
 	}
 
 	# read hobby data
-	data_hobby<-   
-	foreach( i = getFileName("hobby",spec),.combine=c )%do%{
-		out <- read.dta(path %+% "hobby/" %+% i ) 
+	# data_hobby<-   
+	# foreach( i = getFileName("hobby",spec),.combine=c )%do%{
+	# 	out <- read.dta(path %+% "hobby/" %+% i ) 
 
-		school_name<-substr(i,1,4)
+	# 	school_name<-substr(i,1,4)
 
-		ID_order <-network_matrix_order[["network_matrix_order_"%+%school_name]]
-		ID_order <- data.frame(index=1:length(ID_order),case_id=ID_order)
+	# 	ID_order <-network_matrix_order[["network_matrix_order_"%+%school_name]]
+	# 	ID_order <- data.frame(index=1:length(ID_order),case_id=ID_order)
 		
-		# sort the data by network_matrix_order
-		out <- merge(out,ID_order,by.x="case_id",by.y="case_id")
-		out <- out[with(out,order(index)),]
-		out$index <- NULL
-		out$case_id <- NULL
+	# 	# sort the data by network_matrix_order
+	# 	out <- merge(out,ID_order,by.x="case_id",by.y="case_id")
+	# 	out <- out[with(out,order(index)),]
+	# 	out$index <- NULL
+	# 	out$case_id <- NULL
 
-		out<-list(as.matrix(out))
-		names(out)<-substr(i,1,nchar(i)-4)
-		out
-	}
+	# 	out<-list(as.matrix(out))
+	# 	names(out)<-substr(i,1,nchar(i)-4)
+	# 	out
+	# }
 
-	raw_data <- c(list(data_wide=data_wide),all_network_data,data_hobby,network_matrix_order,spec=list(spec))   
+	# raw_data <- c(list(data_wide=data_wide),all_network_data,data_hobby,network_matrix_order,spec=list(spec))   
+  raw_data <- c(list(data_wide=data_wide),all_network_data,network_matrix_order,spec=list(spec))   
+
 	return(raw_data) 
 }
 
