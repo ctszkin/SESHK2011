@@ -161,7 +161,8 @@ genSpecStandardMath <- function(network=c("all","friends","studymates"), network
     + I(abs(((play_any_music>0)+0)-((friends_play_any_music>0)+0))) 
     + I(abs(((play_any_sport>0)+0)-((friends_play_any_sport>0)+0))) 
     + I(abs(((play_team>0)+0)-((friends_play_team>0)+0)))
-    + I(  class_n == friends_class_n  ) + class_n + friends_class_n
+    + I( (class_n == friends_class_n)  +0 ) 
+    + I( (piano == friends_piano)  +  (violin == friends_violin)  + (guitar == friends_guitar) )
   ) 
 
     # | music + sport + team + class) 
