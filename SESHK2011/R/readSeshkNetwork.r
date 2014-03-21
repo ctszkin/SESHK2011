@@ -3,13 +3,13 @@
 #' @aliases readSeshkNetwork
 #' @title readSeshkNetwork
 #' @param .data_source path
-#' @param .version Version number. Default is "SESHK2011 - network - 0.7.10/"
+#' @param .version Version number. Default is "SESHK2011 - network - 0.8.0"
 #' @return a raw_data 
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.7.10/"){
-	if (.version!="SESHK2011 - network - 0.7.10")
-		warning("Only tested under 0.7.10. " %+% .version %+% " is not tested. Error may occur.")
+readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.8.0"){
+	if (.version!="SESHK2011 - network - 0.8.0")
+		warning("Only tested under 0.8.0. " %+% .version %+% " is not tested. Error may occur.")
 
 	path<-
 	if (missing(.data_source))
@@ -17,9 +17,9 @@ readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.7.10/"
 	else
  		.data_source %+% "/" %+% .version %+% "/"
 
-  	spec<-readSpecification(path)
-  	
-  	i=j=NULL
+	spec<-readSpecification(path)
+	
+	i=j=school_name=NULL
 
 	# read network data
 	all_network_data<-  
@@ -81,27 +81,29 @@ readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.7.10/"
 	}
 
 	# read hobby data
-	data_hobby<-   
-	foreach( i = getFileName("hobby",spec),.combine=c )%do%{
-		out <- read.dta(path %+% "hobby/" %+% i ) 
+	# data_hobby<-   
+	# foreach( i = getFileName("hobby",spec),.combine=c )%do%{
+	# 	out <- read.dta(path %+% "hobby/" %+% i ) 
 
-		school_name<-substr(i,1,4)
+	# 	school_name<-substr(i,1,4)
 
-		ID_order <-network_matrix_order[["network_matrix_order_"%+%school_name]]
-		ID_order <- data.frame(index=1:length(ID_order),case_id=ID_order)
+	# 	ID_order <-network_matrix_order[["network_matrix_order_"%+%school_name]]
+	# 	ID_order <- data.frame(index=1:length(ID_order),case_id=ID_order)
 		
-		# sort the data by network_matrix_order
-		out <- merge(out,ID_order,by.x="case_id",by.y="case_id")
-		out <- out[with(out,order(index)),]
-		out$index <- NULL
-		out$case_id <- NULL
+	# 	# sort the data by network_matrix_order
+	# 	out <- merge(out,ID_order,by.x="case_id",by.y="case_id")
+	# 	out <- out[with(out,order(index)),]
+	# 	out$index <- NULL
+	# 	out$case_id <- NULL
 
-		out<-list(as.matrix(out))
-		names(out)<-substr(i,1,nchar(i)-4)
-		out
-	}
+	# 	out<-list(as.matrix(out))
+	# 	names(out)<-substr(i,1,nchar(i)-4)
+	# 	out
+	# }
 
-	raw_data <- c(list(data_wide=data_wide),all_network_data,data_hobby,network_matrix_order,spec=list(spec))   
+	# raw_data <- c(list(data_wide=data_wide),all_network_data,data_hobby,network_matrix_order,spec=list(spec))   
+  raw_data <- c(list(data_wide=data_wide),all_network_data,network_matrix_order,spec=list(spec))   
+
 	return(raw_data) 
 }
 
@@ -215,7 +217,7 @@ getHobby<-function(.raw_data,.school,.hobby,.drop_by_case_id){
 #' @export
 
 prepareData <- function (.raw_data, .spec, .school ){
-
+    i = NULL
     # .hobby <- match.arg(.hobby, several.ok = TRUE)
     # .school <- match.arg(.school, several.ok = TRUE)
     if ( missing(.school) ) {
@@ -275,12 +277,12 @@ prepareData <- function (.raw_data, .spec, .school ){
 
 
 
-    i <- NULL
-    H <- foreach(i = .spec$hobby, .combine = c) %do% {
-        out <- list(getHobby(.raw_data, .school, i, drop_case_id))
-        names(out) <- i
-        out
-    }
+    # i <- NULL
+    # H <- foreach(i = .spec$hobby, .combine = c) %do% {
+    #     out <- list(getHobby(.raw_data, .school, i, drop_case_id))
+    #     names(out) <- i
+    #     out
+    # }
 
     network_name = sapply(.spec$network_info_list, "[[", "name")
 
@@ -296,7 +298,8 @@ prepareData <- function (.raw_data, .spec, .school ){
     data_wide = cbind(data_wide, .spec$genNetworkStatistics(network_matrix_list) )
 
 
-    out <- list(network_matrix_list = network_matrix_list, data = data_wide, H = H, network_name=network_name,group_index=group_index)
+    # out <- list(network_matrix_list = network_matrix_list, data = data_wide, H = H, network_name=network_name,group_index=group_index)
+    out <- list(network_matrix_list = network_matrix_list, data = data_wide, network_name=network_name,group_index=group_index)
     out <- list(out)
     names(out) <- .school
     return(out)
@@ -328,25 +331,25 @@ extractData <- function(.spec, .data){
     f1 = update(f1, ~.+-1)
   }
 
-  other_network_variables<-NULL
-  use_network_variable<-FALSE
-  if (length(network_formation_formula)[2]==2){
-    use_network_variable<-TRUE
-    f2<-formula(network_formation_formula,rhs=2)
-    other_network_variables<-attr(terms(f2),"term.labels")
-  }
-  H_name <-  attr(terms(f2),"term.labels")
+  # other_network_variables<-NULL
+  # use_network_variable<-FALSE
+  # if (length(network_formation_formula)[2]==2){
+  #   use_network_variable<-TRUE
+  #   f2<-formula(network_formation_formula,rhs=2)
+  #   other_network_variables<-attr(terms(f2),"term.labels")
+  # }
+  # H_name <-  attr(terms(f2),"term.labels")
   
   out<-getPairwiseFriendshipData(.data,f1)
   out$formula = formula
   out$network_formation_formula = network_formation_formula
 
 
-  if (length(network_formation_formula)[2]==2){
-    H_pair<-sapply(.data$H[H_name],genPairwiseHobbyData)
-    out$self_data_matrix<-cbind(out$self_data_matrix,H_pair)
-    out$friends_data_matrix<-cbind(out$friends_data_matrix,H_pair)
-  }
+  # if (length(network_formation_formula)[2]==2){
+  #   H_pair<-sapply(.data$H[H_name],genPairwiseHobbyData)
+  #   out$self_data_matrix<-cbind(out$self_data_matrix,H_pair)
+  #   out$friends_data_matrix<-cbind(out$friends_data_matrix,H_pair)
+  # }
   
   ## generate dummy matrix
   if ( !is.null(.spec$network_formation_fixed_effect) && .spec$network_formation_fixed_effect ){

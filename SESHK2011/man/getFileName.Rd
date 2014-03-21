@@ -2,7 +2,7 @@
 \alias{getFileName}
 \title{getFileName}
 \usage{
-getFileName(type = c("network", "hobby"), spec)
+getFileName(type = c("network"), spec)
 }
 \arguments{
   \item{type}{type}
