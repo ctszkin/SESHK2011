@@ -3,13 +3,13 @@
 #' @aliases readSeshkNetwork
 #' @title readSeshkNetwork
 #' @param .data_source path
-#' @param .version Version number. Default is "SESHK2011 - network - 0.7.10/"
+#' @param .version Version number. Default is "SESHK2011 - network - 0.8.0"
 #' @return a raw_data 
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.7.10/"){
-	if (.version!="SESHK2011 - network - 0.7.10")
-		warning("Only tested under 0.7.10. " %+% .version %+% " is not tested. Error may occur.")
+readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.8.0"){
+	if (.version!="SESHK2011 - network - 0.8.0")
+		warning("Only tested under 0.8.0. " %+% .version %+% " is not tested. Error may occur.")
 
 	path<-
 	if (missing(.data_source))
@@ -17,9 +17,9 @@ readSeshkNetwork<-function(.data_source,.version="SESHK2011 - network - 0.7.10/"
 	else
  		.data_source %+% "/" %+% .version %+% "/"
 
-  	spec<-readSpecification(path)
-  	
-  	i=j=NULL
+	spec<-readSpecification(path)
+	
+	i=j=school_name=NULL
 
 	# read network data
 	all_network_data<-  
@@ -217,7 +217,7 @@ getHobby<-function(.raw_data,.school,.hobby,.drop_by_case_id){
 #' @export
 
 prepareData <- function (.raw_data, .spec, .school ){
-
+    i = NULL
     # .hobby <- match.arg(.hobby, several.ok = TRUE)
     # .school <- match.arg(.school, several.ok = TRUE)
     if ( missing(.school) ) {

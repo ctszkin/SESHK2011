@@ -12,7 +12,7 @@ genSpecStandardMath <- function(network=c("all","friends","studymates"), network
 
   network = match.arg(network)
   
-  data_version = "SESHK2011 - network - 0.7.10"
+  data_version = "SESHK2011 - network - 0.8.0"
 
   school_names <- c("kslo","lskc","thf1","thf2","thf3")
 
@@ -160,23 +160,25 @@ genSpecStandardMath <- function(network=c("all","friends","studymates"), network
     + I(elder_brother+elder_sister) + I(younger_brother+younger_sister) 
     + I(abs(((play_any_music>0)+0)-((friends_play_any_music>0)+0))) 
     + I(abs(((play_any_sport>0)+0)-((friends_play_any_sport>0)+0))) 
-    + I(abs(((play_team>0)+0)-((friends_play_team>0)+0))) 
+    + I(abs(((play_team>0)+0)-((friends_play_team>0)+0)))
+    + I(  class_n == friends_class_n  ) + class_n + friends_class_n
+  ) 
+
     # | music + sport + team + class) 
 
 
-	## If you want to have more than two raw network matrices, you can set definition=c("network_1","network_2","network_3")
-	## Of course, you can just use one network!
+	# If you want to have more than two raw network matrices, you can set definition=c("network_1","network_2","network_3")
+	# Of course, you can just use one network!
 
+  friends_network_info=list(
+    name="friends",
+    definition=c("my_friends","my_friends"),
+    process_network=process_network_function_friends)
 
-	friends_network_info=list(
-	  name="friends",
-	  definition=c("my_friends","my_friends"),
-	  process_network=process_network_function_friends)
-
-	studymates_network_info=list(
-	  name="studymates",
-	  definition=c("help_me_school","help_them_school"),
-	  process_network=process_network_function_studymates)
+  studymates_network_info=list(
+    name="studymates",
+    definition=c("help_me_school","help_them_school"),
+    process_network=process_network_function_studymates)
 
   network_info_list=
   	switch(network, 

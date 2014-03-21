@@ -3,24 +3,24 @@
 #' @aliases readSpecification
 #' @title readSpecification
 #' @param  path path
-#' @param  type type
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
 
-readSpecification<-function(path,type=c("all","network","hobby")){
-  type<-match.arg(type)
+readSpecification<-function(path){
+  # type<-match.arg(type)
 
-  if (type=="all"){
-    network<-readSpecification(path,"network")
-    hobby<-readSpecification(path,"hobby")
+  # if (type=="all"){
+  #   network<-readSpecification(path,"network")
+  #   hobby<-readSpecification(path,"hobby")
 
-    if (!setequal(network$school_name,hobby$school_name))
-      stop("School name are not the same between network and hobby!")
+  #   if (!setequal(network$school_name,hobby$school_name))
+  #     stop("School name are not the same between network and hobby!")
 
-    return(list(school=network$school_name,network=network$type_name,hobby=hobby$type_name))
-  }
+  #   return(list(school=network$school_name,network=network$type_name,hobby=hobby$type_name))
+  # }
 
+  type = "network"
   all_name<-dir(path%+%type)
   school_name<-unique(strtrim(all_name,4))
 
@@ -36,7 +36,7 @@ readSpecification<-function(path,type=c("all","network","hobby")){
   if (!setequal(all_name,check_name) )
     stop("Some combination of school and " %+% type %+%" is missing in the file.")
 
-  list(school_name=school_name,type_name=type_name)
+  list(school=school_name,network=type_name)
 }
 
 #' Description getVariableName
@@ -48,7 +48,7 @@ readSpecification<-function(path,type=c("all","network","hobby")){
 #' @return value value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-getVariableName<-function(type=c("school","network","hobby"),spec){
+getVariableName<-function(type=c("school","network"),spec){
   spec[[type]]
 }
 
@@ -61,7 +61,7 @@ getVariableName<-function(type=c("school","network","hobby"),spec){
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
-getFileName<-function(type=c("network","hobby"),spec){
+getFileName<-function(type=c("network"),spec){
   start<-getVariableName("school",spec) %+% "_" %+% type %+% "_"
   end<-getVariableName(type,spec) 
 

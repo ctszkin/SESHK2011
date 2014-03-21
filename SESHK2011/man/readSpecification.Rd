@@ -2,12 +2,10 @@
 \alias{readSpecification}
 \title{readSpecification}
 \usage{
-readSpecification(path, type = c("all", "network", "hobby"))
+readSpecification(path)
 }
 \arguments{
   \item{path}{path}
-
-  \item{type}{type}
 }
 \value{
 value

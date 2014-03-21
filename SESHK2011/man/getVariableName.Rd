@@ -2,7 +2,7 @@
 \alias{getVariableName}
 \title{getVariableName}
 \usage{
-getVariableName(type = c("school", "network", "hobby"), spec)
+getVariableName(type = c("school", "network"), spec)
 }
 \arguments{
   \item{type}{type}
