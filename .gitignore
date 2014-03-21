@@ -1,4 +1,7 @@
 SESHK2011.Rcheck/
 testing_area/SESHK2011 - network - 0.6.2/
-*.gz
+*.gz 
+*.7z
 SESHK2011 - network - 0.7.10/
+SESHK2011 - network - 0.8.0/
+*.tar.gz
