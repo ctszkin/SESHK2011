@@ -409,8 +409,7 @@ extractData <- function(.spec, .data){
 getXandWX <- function(formula,data){
   if (!"Formula" %in% class(formula)){
     formula<-Formula(formula)
-  } else
-  
+  }   
   f1<-formula(formula,rhs=1)
   
   f2<-
