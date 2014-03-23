@@ -407,14 +407,17 @@ extractData <- function(.spec, .data){
 
 
 getXandWX <- function(formula,data){
-  formula_F<-Formula(formula)
-  f1<-formula(formula_F,rhs=1)
+  if (!"Formula" %in% class(formula)){
+    formula<-Formula(formula)
+  } else
+  
+  f1<-formula(formula,rhs=1)
   
   f2<-
-    if(length(formula_F)[2]==1) {
+    if(length(formula)[2]==1) {
       f1
     } else {
-      formula(formula_F,rhs=2)
+      formula(formula,rhs=2)
     }
   
   var_f2 = sub("friends_","", attr( terms(f2),"term.labels"))

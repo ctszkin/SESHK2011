@@ -138,7 +138,14 @@ genSpecStandardMath <- function(network=c("all","friends","studymates"), network
 
 
 
-  formula <- exam1_math_std ~ matrix_test_std + bfi_conscientiousness_std + bfi_openness_std + bfi_agreeableness_std + bfi_neuroticism_std + bfi_extraversion_std  + male + degree_friends + degree_studymates + commute_car + commute_taxi + ksloB + ksloC + ksloD + ksloE +  lskcB + lskcC + lskcD + lskcE + thf1B + thf1C + thf1D + thf1E + thf2B + thf2C + thf2D + thf2E + thf3B + thf3C + thf3D + thf3E + height_std + I(elder_brother+elder_sister) + I(younger_brother+younger_sister) + I((play_any_music>0)+0) + I((play_any_sport>0)+0) + I((play_team>0)+0) | matrix_test_std + bfi_conscientiousness_std +  bfi_openness_std + bfi_agreeableness_std + bfi_neuroticism_std + bfi_extraversion_std 
+  formula <- Formula( exam1_math_std ~ matrix_test_std + bfi_conscientiousness_std + bfi_openness_std + bfi_agreeableness_std + bfi_neuroticism_std + bfi_extraversion_std  + male  + commute_car + commute_taxi + ksloB + ksloC + ksloD + ksloE +  lskcB + lskcC + lskcD + lskcE + thf1B + thf1C + thf1D + thf1E + thf2B + thf2C + thf2D + thf2E + thf3B + thf3C + thf3D + thf3E + height_std + I(elder_brother+elder_sister) + I(younger_brother+younger_sister) + I((play_any_music>0)+0) + I((play_any_sport>0)+0) + I((play_team>0)+0) | matrix_test_std + bfi_conscientiousness_std +  bfi_openness_std + bfi_agreeableness_std + bfi_neuroticism_std + bfi_extraversion_std  )
+
+  formula = 
+  switch(network,
+    all = update(formula, .~.+ degree_friends + degree_studymates |.),
+    friends = update(formula, .~.+ degree_friends  |.),
+    studymates = update(formula, .~.+ degree_studymates |.)
+  )
   #　
   # network_formation_formula <-  ~ matrix_test_std + I((matrix_test_std - friends_matrix_test_std)^2) + bfi_conscientiousness_std + I((bfi_conscientiousness_std - friends_bfi_conscientiousness_std)^2) + bfi_openness_std + I((bfi_openness_std - friends_bfi_openness_std)^2) + bfi_agreeableness_std + I((bfi_agreeableness_std - friends_bfi_agreeableness_std)^2) + bfi_neuroticism_std + I((bfi_neuroticism_std - friends_bfi_neuroticism_std)^2) + bfi_extraversion_std + I((bfi_extraversion_std - friends_bfi_extraversion_std)^2) + male + I((male-friends_male)^2) + height_std + I((height_std - friends_height_std)^2) + I(elder_brother+elder_sister) + I(younger_brother+younger_sister) + I((((play_any_music>0)+0)-((friends_play_any_music>0)+0))^2) + I((((play_any_sport>0)+0)-((friends_play_any_sport>0)+0))^2) + I((((play_team>0)+0)-((friends_play_team>0)+0))^2) | music + sport + team + class
   network_formation_formula <- (
