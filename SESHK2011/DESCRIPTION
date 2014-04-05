@@ -1,7 +1,7 @@
 Package: SESHK2011
 Type: Package
 Title: Secondary Education Survey of Hong Kong(SESHK)
-Version: 0.3.1
+Version: 0.3.2
 Date: 07-05-2012
 Author: TszKin Julian Chan <ctszkin@gmail.com>
 Maintainer: TszKin Julian Chan <ctszkin@gmail.com>

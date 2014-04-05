@@ -552,7 +552,7 @@ genModelData <- function(.spec, save=FALSE, path=""){
   if (class(.spec)!="SESHK_Spec")
     stop("spec must be an SESHK_Spec object")
 
-   raw_data<-readSeshkNetwork(.version = .spec$data_version)
+   raw_data<-readSeshkNetwork(.data_source=path, .version = .spec$data_version)
 
    data = prepareData(.raw_data=raw_data, .spec=.spec )
 
