@@ -363,6 +363,14 @@ extractData <- function(.spec, .data){
     out$friends_data_matrix = cbind(dummy_matrix,out$friends_data_matrix)
   }
 
+  new_colnames = colnames(out$self_data_matrix) 
+  new_colnames[nchar(new_colnames) > 100]  = paste0(substr(new_colnames[nchar(new_colnames) > 100], 1, 100), "..." )
+  colnames(out$self_data_matrix)  = new_colnames
+
+  new_colnames = colnames(out$friends_data_matrix) 
+  new_colnames[nchar(new_colnames) > 100]  = paste0(substr(new_colnames[nchar(new_colnames) > 100], 1, 100), "..." )
+  colnames(out$friends_data_matrix)  = new_colnames
+
   # TODO: add seat assignment here
   # out$response1 <- as.logical(out$response)
   # out$response <- list(response1=out$response1)
