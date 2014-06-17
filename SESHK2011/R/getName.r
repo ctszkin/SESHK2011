@@ -1,4 +1,5 @@
 #' Description readSpecification
+#' 
 #' @name readSpecification
 #' @aliases readSpecification
 #' @title readSpecification

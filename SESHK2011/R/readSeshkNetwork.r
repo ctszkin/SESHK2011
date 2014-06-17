@@ -212,17 +212,18 @@ getHobby<-function(.raw_data,.school,.hobby,.drop_by_case_id){
 #' @param .raw_data .raw_data
 #' @param .spec .spec
 #' @param .school .school
+#' @param .counterfactual_mod .counterfactual_mod
 #' @return value
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
 
-prepareData <- function (.raw_data, .spec, .school ){
+prepareData <- function (.raw_data, .spec, .school , .counterfactual_mod){
     i = NULL
     # .hobby <- match.arg(.hobby, several.ok = TRUE)
     # .school <- match.arg(.school, several.ok = TRUE)
     if ( missing(.school) ) {
       out <- foreach(i = .spec$school_name, .combine = c) %do% {
-        prepareData(.raw_data=.raw_data, .school = i, .spec=.spec)
+        prepareData(.raw_data=.raw_data, .school = i, .spec=.spec, .counterfactual_mod=.counterfactual_mod)
       }
       return(out)
     }
@@ -273,7 +274,11 @@ prepareData <- function (.raw_data, .spec, .school ){
       out
     })
 
-
+    if (!missing(.counterfactual_mod)){
+      cat("modifing network")
+      network_matrix_list = .counterfactual_mod(network_matrix_list, data_wide, .spec)
+    }
+    
 
 
 
@@ -552,17 +557,18 @@ ToUndirectedGraph<-function(method=c("undirected_and","undirected_or","directed"
 #' @param .spec .spec
 #' @param save save
 #' @param path path
+#' @param counterfactual_mod counterfactual_mod
 #' @return value 
 #' @author TszKin Julian Chan \email{ctszkin@@gmail.com}
 #' @export
 
-genModelData <- function(.spec, save=FALSE, path=""){
+genModelData <- function(.spec, save=FALSE, path="", counterfactual_mod){
   if (class(.spec)!="SESHK_Spec")
     stop("spec must be an SESHK_Spec object")
 
    raw_data<-readSeshkNetwork(.data_source=path, .version = .spec$data_version)
 
-   data = prepareData(.raw_data=raw_data, .spec=.spec )
+   data = prepareData(.raw_data=raw_data, .spec=.spec ,.counterfactual_mod=counterfactual_mod )
 
    out = lapply(data, extractData, .spec=.spec)
    

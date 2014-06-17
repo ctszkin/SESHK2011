@@ -1,8 +1,8 @@
 Package: SESHK2011
 Type: Package
 Title: Secondary Education Survey of Hong Kong(SESHK)
-Version: 0.3.2
-Date: 07-05-2012
+Version: 0.3.3
+Date: 17-06-2014
 Author: TszKin Julian Chan <ctszkin@gmail.com>
 Maintainer: TszKin Julian Chan <ctszkin@gmail.com>
 Description: Convert the stata format of SESHK2011-network (v0.7.10) into R data
