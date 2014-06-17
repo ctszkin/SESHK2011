@@ -275,7 +275,7 @@ prepareData <- function (.raw_data, .spec, .school , .counterfactual_mod){
     })
 
     if (!missing(.counterfactual_mod)){
-      cat("modifing network")
+      #cat("modifing network")
       network_matrix_list = .counterfactual_mod(network_matrix_list, data_wide, .spec)
     }
     
